@@ -49,7 +49,24 @@
   <!-- ======= Sidebar ======= -->
   <jsp:include page="parts/sidebar.jsp" />
 
-  <!-- ======= Nội dung chính của trang ======= -->
+	<!-- JS - Hiện thị thông báo thêm/sửa/xóa thành công -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+		  const modalMessageElem = document.getElementById('modalMessage');
+		  const message = modalMessageElem ? modalMessageElem.textContent.trim() : "";
+		  if(message) {
+		    var messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+		    messageModal.show();
+	
+		    // Bạn có thể dùng Ajax để gửi yêu cầu xóa message khỏi session ở server nếu muốn.
+		    // Hoặc bạn có thể xóa message trong lần gọi servlet tiếp theo (thường là sau khi reload trang).
+		  }
+		});
+		
+	</script>
+		
+
+	<!-- ======= Nội dung chính của trang ======= -->
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -226,7 +243,6 @@
 			                        data-bs-dismiss="modal" aria-label="Đóng"></button>
 			            </div>
 			            
-			            
 			            <div class="modal-body px-4 pt-4">
 			                <div class="row g-3">
 			                    <div class="col-md-12">
@@ -270,6 +286,8 @@
 			        </div>
 			    </div>
 			</div>
+			<!-- End Form Xem chi tiết  -->
+			
 			
 			<!-- Modal Sửa Thông Tin Nhà Cung Cấp -->
 			<div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel" aria-hidden="true">
@@ -284,84 +302,117 @@
 			        </div>
 			        <div class="modal-body px-4 pt-4">
 			          <div class="row g-3">
+			          
 			          	<!-- Hidden cho chức năng sửa -->
 			          	<input type="hidden" name="action" value="edit"/>
 			          	
 			            <!-- Hidden input mã nhà cung cấp -->
 			            <input type="hidden" id="editBrandId" name="brandId" />
 			            
+			             <!-- Tên nhà cung cấp -->
 			            <div class="col-md-12">
-			              <label for="editBrandName" class="form-label">Tên nhà cung cấp</label>
-			              <div class="input-group">
-			                <span class="input-group-text"><i class="ri-user-line"></i></span>
-			                <input type="text" class="form-control" id="editBrandName" name="brandName" placeholder="Nhập tên nhà cung cấp">
-			              </div>
+							<label for="editBrandName" class="form-label">Tên nhà cung cấp</label>
+			              	<div class="input-group">
+			                	<span class="input-group-text"><i class="ri-user-line"></i></span>
+			                	<input type="text" class="form-control" 
+			                	id="editBrandName" name="brandName" placeholder="Nhập tên nhà cung cấp">
+			              	</div>
+			              
+			             	<!-- Hiện thị thông báo lỗi JS -->
+			              	<span class="error-message text-danger small"></span>
+			            </div>
+			
+			            <!-- Địa chỉ -->
+			            <div class="col-md-12">
+			              	<label for="editBrandAddress" class="form-label">Địa chỉ</label>
+			              	<div class="input-group">
+			                	<span class="input-group-text"><i class="ri-map-pin-line"></i></span>
+			                	<input type="text" class="form-control" 
+			                	id="editBrandAddress" name="brandAddress" placeholder="Nhập địa chỉ">
+			              	</div>
+			              	<!-- Hiện thị thông báo lỗi JS -->
+			             	<span class="error-message text-danger small"></span>
 			            </div>
 			
 			            <div class="col-md-12">
-			              <label for="editBrandAddress" class="form-label">Địa chỉ</label>
-			              <div class="input-group">
-			                <span class="input-group-text"><i class="ri-map-pin-line"></i></span>
-			                <input type="text" class="form-control" id="editBrandAddress" name="brandAddress" placeholder="Nhập địa chỉ">
-			              </div>
-			            </div>
-			
-			            <div class="col-md-12">
-			              <label for="editBrandMobiphone" class="form-label">Số điện thoại</label>
-			              <div class="input-group">
-			                <span class="input-group-text"><i class="ri-phone-line"></i></span>
-			                <input type="text" class="form-control" id="editBrandMobiphone" name="brandMobiphone" placeholder="Nhập số điện thoại">
-			              </div>
+			              	<label for="editBrandMobiphone" class="form-label">Số điện thoại</label>
+			              	<div class="input-group">
+			                	<span class="input-group-text"><i class="ri-phone-line"></i></span>
+			                	<input type="text" class="form-control" 
+			                	id="editBrandMobiphone" name="brandMobiphone" placeholder="Nhập số điện thoại">
+			                </div>
+			                <!-- Hiện thị thông báo lỗi JS -->
+			                <span class="error-message text-danger small"></span>
 			            </div>
 			          </div>
 			        </div>
 			        <div class="modal-footer px-4 pb-4">
-			          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-			            <i class="ri-close-line"></i> Hủy
-			          </button>
-			          <button type="submit" class="btn btn-warning">
-			            <i class="ri-save-line"></i> Cập nhật
-			          </button>
+			          	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+			            	<i class="ri-close-line"></i> Hủy
+			          	</button>
+			          	<button type="submit" class="btn btn-warning">
+			            	<i class="ri-save-line"></i> Cập nhật
+			          	</button>
 			        </div>
 			      </form>
 			    </div>
 			  </div>
 			</div>
+			<!-- End Form Sửa NCC  -->
+			
 			
 			<!-- Modal Xóa Thông Tin Nhà Cung Cấp -->
 			<div class="modal fade" id="deleteBrandModal" tabindex="-1" aria-labelledby="deleteBrandModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-dialog-centered modal-md">
-			    <div class="modal-content border-0 shadow-lg rounded-4">
-			      <form action="deleteBrand" method="post" id="deleteBrandForm">
-			        <div class="modal-header bg-danger text-white rounded-top-4">
-			          <h5 class="modal-title" id="deleteBrandModalLabel">
-			            <i class="ri-delete-bin-line me-2"></i>Xác nhận xóa nhà cung cấp
-			          </h5>
-			          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
-			          
-			          <!-- Hidden cho chức năng xóa -->
-			          <input type="hidden" name="action" value="delete">
-			          
-			        </div>
-			        <div class="modal-body px-4 pt-4">
-			          <p>Bạn có chắc chắn muốn xóa nhà cung cấp này không?</p>
-			          <!-- Ẩn input để gửi id brand cần xóa -->
-			          <input type="hidden" name="brandId" id="deleteBrandId" value="">
-			        </div>
-			        <div class="modal-footer px-4 pb-4">
-			          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-			            <i class="ri-close-line"></i> Hủy
-			          </button>
-			          <button type="submit" class="btn btn-danger">
-			            <i class="ri-delete-bin-6-line"></i> Xóa
-			          </button>
-			        </div>
-			      </form>
-			    </div>
-			  </div>
+			  	<div class="modal-dialog modal-dialog-centered modal-md">
+			    	<div class="modal-content border-0 shadow-lg rounded-4">
+			      		<form action="deleteBrand" method="post" id="deleteBrandForm">
+			        		<div class="modal-header bg-danger text-white rounded-top-4">
+				          		<h5 class="modal-title" id="deleteBrandModalLabel">
+				            		<i class="ri-delete-bin-line me-2"></i>Xác nhận xóa nhà cung cấp
+				          		</h5>
+				          		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+				          
+				          		<!-- Hidden cho chức năng xóa -->
+				          		<input type="hidden" name="action" value="delete">
+			        		</div>
+			        		<div class="modal-body px-4 pt-4">
+			          			<p>Bạn có chắc chắn muốn xóa nhà cung cấp này không?</p>
+			          			
+			          			<!-- Ẩn input để gửi id brand cần xóa -->
+			          			<input type="hidden" name="brandId" id="deleteBrandId" value="">
+			        		</div>
+			        		<div class="modal-footer px-4 pb-4">
+			          			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+			            			<i class="ri-close-line"></i> Hủy
+			          			</button>
+			          			<button type="submit" class="btn btn-danger">
+			            			<i class="ri-delete-bin-6-line"></i> Xóa
+			          			</button>
+			        		</div>
+			      		</form>
+			    	</div>
+			  	</div>
 			</div>
-						
 			
+			
+			<!-- Modal thông báo thành công thêm, sửa, xóa -->
+			<!-- Modal Thông báo -->
+			<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+			  	<div class="modal-dialog modal-dialog-centered">
+			    	<div class="modal-content">
+			      		<div class="modal-header bg-success text-white">
+			        		<h5 class="modal-title" id="messageModalLabel">Thông báo</h5>
+			        		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+			      		</div>
+			      		<div class="modal-body">
+			        		<p id="modalMessage">${message}</p>
+			      		</div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-success" data-bs-dismiss="modal">Đóng</button>
+			      		</div>
+			    	</div>
+			  	</div>
+			</div>
 			
             </div>
           </div>
@@ -387,7 +438,7 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+	
   <!-- Vendor JS Files -->
   <script src="${pageContext.request.contextPath}/assets/adjs/apexcharts.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/adjs/bootstrap.bundle.min.js"></script>
@@ -468,6 +519,7 @@
 	  });
 	</script>
 
+	
 	<!-- JS cho chức năng xem chi tiết -->
 	<script>
 	    const viewBrandModal = document.getElementById('viewBrandModal');
@@ -486,7 +538,8 @@
 	    });
 	</script>
 	
-	<script>
+	<!-- JS cho sửa NCC -->
+	<!-- <script>
 		const editModal = document.getElementById('editBrandModal');
 		editModal.addEventListener('show.bs.modal', function (event) {
 		  const button = event.relatedTarget;
@@ -503,14 +556,79 @@
 		  document.getElementById('editBrandAddress').value = brandAddress;
 		  document.getElementById('editBrandMobiphone').value = brandPhone;
 		});
+	</script> -->
+	
+	<!-- JS cho sửa NCC -->
+	<!-- 1. JS cho sửa NCC - Hiện thị lên input -->
+	<script>
+		const editBrandModal = document.getElementById('editBrandModal');
+		editBrandModal.addEventListener('show.bs.modal', function (event) {
+		const button = event.relatedTarget;
+
+		  // Lấy dữ liệu từ data-attributes của nút
+		  const brandId = button.getAttribute('data-id');
+		  const brandName = button.getAttribute('data-name');
+		  const brandAddress = button.getAttribute('data-address');
+		  const brandMobiphone = button.getAttribute('data-phone');
+		
+		  // Gán dữ liệu vào các input trong modal
+		  document.getElementById('editBrandId').value = brandId || '';
+		  document.getElementById('editBrandName').value = brandName || '';
+		  document.getElementById('editBrandAddress').value = brandAddress || '';
+		  document.getElementById('editBrandMobiphone').value = brandMobiphone || '';
+		});
 	</script>
 	
+	<!-- 2. JS cho sửa NCC - Thông báo các lỗi nhập -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const form = document.querySelector('#editBrandModal form');
+			
+			form.addEventListener('submit', function (event) {
+			let isValid = true;
+			
+			// Xóa thông báo lỗi cũ
+			document.querySelectorAll('#editBrandModal .error-message').forEach(span => {
+			  	span.textContent = '';
+			});
+			
+		    // Lấy giá trị các ô nhập
+		    const brandName = document.getElementById('editBrandName');
+		    const brandAddress = document.getElementById('editBrandAddress');
+		    const brandMobiphone = document.getElementById('editBrandMobiphone');
+		
+		    // Kiểm tra không để trống
+		    if (brandName.value.trim() === '') {
+		      brandName.parentElement.parentElement.querySelector('.error-message').textContent = 'Tên nhà cung cấp không được để trống';
+		      isValid = false;
+		    }
+		
+		    if (brandAddress.value.trim() === '') {
+		      brandAddress.parentElement.parentElement.querySelector('.error-message').textContent = 'Địa chỉ không được để trống';
+		      isValid = false;
+		    }
+		
+		    if (!/^\d{10}$/.test(brandMobiphone.value.trim())) {
+		      brandMobiphone.parentElement.parentElement.querySelector('.error-message').textContent = 'Số điện thoại phải gồm đúng 10 chữ số.';
+		      isValid = false;
+		    }
+		
+		    // Nếu có lỗi -> không cho submit
+		    if (!isValid) {
+		      event.preventDefault();
+		    }
+		  });
+		});
+	</script>
+
+
+	<!-- JS cho xóa NCC  -->
 	<script>
 		document.querySelectorAll('.deleteBrandBtn').forEach(button => {
-		  button.addEventListener('click', function () {
-		    const brandId = this.getAttribute('data-brand-id');
-		    document.getElementById('deleteBrandId').value = brandId;
-		  });
+		  	button.addEventListener('click', function () {
+		    	const brandId = this.getAttribute('data-brand-id');
+		    	document.getElementById('deleteBrandId').value = brandId;
+		  	});
 		});
 	</script>
 

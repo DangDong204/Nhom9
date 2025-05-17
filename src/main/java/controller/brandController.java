@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.BrandDAO;
 import model.Brand;
@@ -38,6 +39,15 @@ public class brandController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		
+		HttpSession session = request.getSession();
+		String msg = (String) session.getAttribute("message");
+		if(msg != null) {
+		    request.setAttribute("message", msg);
+		    session.removeAttribute("message"); // xóa luôn tại đây
+		}
+
+	    
 		// Bỏ dòng này đi
 		/* BrandDAO brandDao = new BrandDAO(); */
 		ArrayList<Brand> listBrand = brandDao.selectAll();
@@ -91,7 +101,12 @@ public class brandController extends HttpServlet {
 	        brand.setBrandAddress(address);
 	        brand.setBrandMobiphone(phone);
 
-	        brandDao.insert(brand);
+	        int result = brandDao.insert(brand);
+			if (result > 0) {
+				request.getSession().setAttribute("message", "Thêm nhà cung cấp thành công!");
+			} else {
+				request.getSession().setAttribute("message", "Thêm nhà cung cấp thất bại!");
+			}
 
 	        // Chuyển hướng về trang danh sách sau khi thêm
 	        response.sendRedirect("quanly-ncc");
@@ -106,7 +121,13 @@ public class brandController extends HttpServlet {
 
 		Brand brand = new Brand(id, name, address, phone);
 		
-		brandDao.update(brand);
+		int result = brandDao.update(brand);
+		if (result > 0) {
+		    request.getSession().setAttribute("message", "Sửa nhà cung cấp thành công!");
+		} else {
+		    request.getSession().setAttribute("message", "Sửa nhà cung cấp thất bại!");
+		}
+
 
 		response.sendRedirect("quanly-ncc");
 	}
@@ -118,7 +139,13 @@ public class brandController extends HttpServlet {
         Brand brand = new Brand();
         brand.setBrandId(id);
         
-        brandDao.delete(brand);
+        int result = brandDao.delete(brand);
+        if (result > 0) {
+            request.getSession().setAttribute("message", "Xóa nhà cung cấp thành công!");
+        } else {
+            request.getSession().setAttribute("message", "Xóa nhà cung cấp thất bại!");
+        }
+
 
         response.sendRedirect("quanly-ncc");
     }
