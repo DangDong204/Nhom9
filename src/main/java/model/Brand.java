@@ -11,7 +11,8 @@ public class Brand {
 	public Brand() {
 		
 	}
-
+	// test commit
+	// test commit 2
 	public Brand(String brandId, String brandName, String brandAddress, String brandMobiphone) {
 		super();
 		this.brandId = brandId;
