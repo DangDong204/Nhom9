@@ -101,6 +101,13 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(orderId, other.orderId);
 	}
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", customer=" + customer + ", deliveryAddress=" + deliveryAddress
+				+ ", orderState=" + orderState + ", paymentMethod=" + paymentMethod + ", createDate=" + createDate
+				+ ", deliveryDate=" + deliveryDate + "]";
+	}
 	
 	
 	

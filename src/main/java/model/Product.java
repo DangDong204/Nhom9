@@ -109,6 +109,13 @@ public class Product {
 		Product other = (Product) obj;
 		return Objects.equals(productId, other.productId);
 	}
+
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", productName=" + productName + ", productImage=" + productImage
+				+ ", productQuantity=" + productQuantity + ", productCost=" + productCost + ", category=" + category
+				+ ", brand=" + brand + ", productDescription=" + productDescription + "]";
+	}
 	
 	
 	

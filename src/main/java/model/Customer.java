@@ -120,6 +120,14 @@ public class Customer {
 		Customer other = (Customer) obj;
 		return Objects.equals(customerId, other.customerId);
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", username=" + username + ", password=" + password
+				+ ", customerName=" + customerName + ", customerGender=" + customerGender + ", customerDate="
+				+ customerDate + ", customerAddress=" + customerAddress + ", customerMobiphone=" + customerMobiphone
+				+ ", customerEmail=" + customerEmail + "]";
+	}
 	
 	
 	

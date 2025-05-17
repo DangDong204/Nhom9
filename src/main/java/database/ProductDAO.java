@@ -236,4 +236,14 @@ public class ProductDAO implements DAOInterface<Product>{
 		return ketQua;
 	}
 	
+	public static void main(String[] args) {
+		ProductDAO bd = new ProductDAO();
+		ArrayList<Product> kq = bd.selectAll();
+		for (Product product : kq) {
+			System.out.println(product.toString());
+		}
+
+		 
+	}
+	
 }

@@ -28,7 +28,7 @@
       	</li><!-- End Quản lý sản phẩm Nav -->
 
 		<li class="nav-item">
-        <a class="nav-link collapsed"  href="order.jsp">
+        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/quanly-donhang">
           <i class="bi bi-bag"></i>
           <span>Quản lý đơn hàng</span>
         </a>
