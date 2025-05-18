@@ -265,7 +265,7 @@
   <!-- Template Main JS File -->
   <script src="${pageContext.request.contextPath}/assets/adjs/main.js"></script>
 	
-	<script>
+	<!-- <script>
 		const viewOrderModal = document.getElementById('viewOrderModal');
 		viewOrderModal.addEventListener('show.bs.modal', async function (event) {
 		    const button = event.relatedTarget;
@@ -293,7 +293,7 @@
 		    tbody.innerHTML = '';
 	
 		    try {
-		        const response = await fetch(`order-details?orderId=${orderId}`);
+		        const response = await fetch(`quanly-donhang?action=getOrderDetails&orderId=${orderId}`);
 		        const orderDetails = await response.json();
 	
 		        orderDetails.forEach(item => {
@@ -312,9 +312,43 @@
 		        tbody.innerHTML = `<tr><td colspan="5" class="text-danger">Không thể tải dữ liệu</td></tr>`;
 		    }
 		});
+	</script> -->
+		
+		<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('viewOrderModal');
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
 
-	</script>
-			
+        // Lấy dữ liệu từ các thuộc tính data-*
+        const orderId = button.getAttribute('data-order-id');
+        const customerName = button.getAttribute('data-customer-name');
+        const deliveryAddress = button.getAttribute('data-delivery-address');
+        const orderState = button.getAttribute('data-order-state');
+        const paymentMethod = button.getAttribute('data-payment-method');
+        const createDate = button.getAttribute('data-create-date');
+        const deliveryDate = button.getAttribute('data-delivery-date');
+
+        // Gán vào các trường trong modal
+        document.getElementById('orderIdText').value = orderId;
+        document.getElementById('customerNameText').value = customerName;
+        document.getElementById('deliveryAddressText').value = deliveryAddress;
+        document.getElementById('orderStateText').value = orderState;
+        document.getElementById('paymentMethodText').value = paymentMethod;
+        document.getElementById('createDateText').value = createDate;
+        document.getElementById('deliveryDateText').value = deliveryDate;
+
+        // Gọi servlet để lấy chi tiết sản phẩm trong đơn hàng
+        fetch('quanly-donhang?action=getOrderDetails&orderId=' + orderId)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('orderDetailsBody').innerHTML = html;
+        });
+
+    });
+});
+</script>
+		
 
 
 </body>

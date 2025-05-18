@@ -57,8 +57,43 @@ public class OrderDAO implements DAOInterface<Order>{
 
 	@Override
 	public Order selectById(Order t) {
-		// TODO Auto-generated method stub
-		return null;
+		Order ketQua = null;
+	    try {
+	        // Bước 1: Tạo kết nối
+	        Connection con = JDBCUtil.getConnection();
+	        
+	        // Bước 2: Tạo ra đối tượng statement
+	        String sql = "SELECT * FROM `order` WHERE orderid = ?";
+	        PreparedStatement st = con.prepareStatement(sql);
+	        st.setString(1, t.getOrderId());
+	        
+	        // Bước 3: Thực thi câu lệnh SQL
+	        ResultSet rs = st.executeQuery();
+	        
+	        // Bước 4: xử lý kết quả
+	        while(rs.next()) {
+	            String orderId = rs.getString("orderid");
+	            String customerId = rs.getString("customerid");
+	            String deliveryAddress = rs.getString("deliveryaddress");
+	            String orderState = rs.getString("orderstate");
+	            String paymentMethod = rs.getString("paymentmethod");
+	            Date createDate = rs.getDate("creatorder");
+	            Date deliveryDate = rs.getDate("deliverydate");
+	            
+	            // Lấy thông tin khách hàng qua CustomerDAO
+	            Customer customer = new CustomerDAO().selectById(new Customer(customerId, "", "", "", "", null, "", "", ""));
+	            
+	            ketQua = new Order(orderId, customer, deliveryAddress, orderState, paymentMethod, createDate, deliveryDate);
+	            break; // tìm thấy thì dừng vòng lặp
+	        }
+	        
+	        // Bước 5: ngắt kết nối
+	        JDBCUtil.closeConnection(con);
+	    } catch (SQLException e) {
+	        System.err.println("Lỗi khi truy vấn dữ liệu bảng order: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return ketQua;
 	}
 
 	@Override

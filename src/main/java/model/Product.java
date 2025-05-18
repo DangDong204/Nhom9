@@ -13,9 +13,13 @@ public class Product {
 	private String productDescription;
 	
 	public Product() {
-		
+		super();
 	}
-
+	
+	public Product(String productId) {
+	    this.productId = productId;
+	}
+	
 	public Product(String productId, String productName, String productImage, int productQuantity, int productCost,
 			Category category, Brand brand, String productDescription) {
 		super();

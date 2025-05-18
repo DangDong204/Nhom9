@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Order {
@@ -13,8 +14,19 @@ public class Order {
 	private Date createDate;
 	private Date deliveryDate;
 	
+    private ArrayList<DetailOrder> orderDetails;
+
+	
 	public Order() {
 		super();
+		// Khởi tạo danh sách chi tiết đơn hàng để tránh null
+        this.orderDetails = new ArrayList<>();
+	}
+	
+	public Order(String orderId) {
+	    this.orderId = orderId;
+        this.orderDetails = new ArrayList<>();
+
 	}
 
 	public Order(String orderId, Customer customer, String deliveryAddress, String orderState, String paymentMethod,
@@ -27,6 +39,8 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.createDate = createDate;
 		this.deliveryDate = deliveryDate;
+        this.orderDetails = new ArrayList<>();
+
 	}
 
 	public String getOrderId() {
@@ -84,6 +98,14 @@ public class Order {
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
+	
+	 public ArrayList<DetailOrder> getOrderDetails() {
+	        return orderDetails;
+	 }
+
+	 public void setOrderDetails(ArrayList<DetailOrder> orderDetails) {
+		 this.orderDetails = orderDetails;
+	 }
 
 	@Override
 	public int hashCode() {

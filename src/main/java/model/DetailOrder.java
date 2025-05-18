@@ -78,6 +78,12 @@ public class DetailOrder {
 		DetailOrder other = (DetailOrder) obj;
 		return Objects.equals(detailOrderId, other.detailOrderId);
 	}
+
+	@Override
+	public String toString() {
+		return "DetailOrder [detailOrderId=" + detailOrderId + ", order=" + order + ", product=" + product
+				+ ", quantityOrder=" + quantityOrder + ", totalPrice=" + totalPrice + "]";
+	}
 	
 	
 	
